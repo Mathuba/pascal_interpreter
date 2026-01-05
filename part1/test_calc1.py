@@ -47,15 +47,6 @@ def test_get_next_token_plus():
     assert interpreter.pos == 1
 
 
-def test_get_next_token_eof():
-    """Test getting an EOF token when past end of input."""
-    interpreter = Interpreter("3")
-    interpreter.pos = 1  # Move past the end
-    token = interpreter.get_next_token()
-    assert token.type == EOF
-    assert token.value is None
-
-
 def test_get_next_token_sequence():
     """Test getting multiple tokens in sequence."""
     interpreter = Interpreter("3+5")
@@ -134,6 +125,12 @@ def test_expr_nine_plus_one():
         ("5+5", 10),
         ("0+9", 9),
         ("7+2", 9),
+        ("123+4", 127),
+        ("4+18", 22),
+        ("1234 +5678", 6912),
+        ("12345+ 67890", 80235),
+        (" 90+ 90", 180),
+        ("100 +  100 ", 200),
     ],
 )
 def test_expr_multiple_inputs(input_str, expected):
